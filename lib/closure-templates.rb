@@ -1,5 +1,5 @@
 require 'java'
-require 'soy-latest.jar'
+require "#{File.dirname(__FILE__)}/soy-latest.jar"
 
 java_import "com.google.template.soy.SoyFileSet"
 java_import "com.google.template.soy.data.SoyMapData"
