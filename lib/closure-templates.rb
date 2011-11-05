@@ -1,19 +1,29 @@
+require 'fileutils'
 require 'java'
 require "#{File.dirname(__FILE__)}/soy-latest.jar"
+
+require 'closure-templates/railtie' if defined?(Rails)
 
 java_import "com.google.template.soy.SoyFileSet"
 java_import "com.google.template.soy.data.SoyMapData"
 java_import "com.google.template.soy.tofu.SoyTofu"
+java_import "com.google.template.soy.jssrc.SoyJsSrcOptions"
 
 class ClosureTemplates
   @@files = {}
   @@template_dir = nil
+  @@output_dir = nil
   @@tofu = nil
   @@initialized = false
+  @@soyJsSrcOptions = nil
   
-  def self.init(dir)
-    @@template_dir = dir
+  def self.config(opts)
+    @@template_dir = opts[:template_directory]
+    @@output_dir = opts[:output_directory]
     @@initialized = true
+    @@soyJsSrcOptions = SoyJsSrcOptions.new
+    @@soyJsSrcOptions.setShouldProvideRequireSoyNamespaces(true)
+    FileUtils.mkdir(@@output_dir) unless File.directory?(@@output_dir)
     self.compile
   end
 
@@ -39,17 +49,30 @@ class ClosureTemplates
 
   def self.compile
     @@files = {}
+    files_in_order = []
     sfs_builder = SoyFileSet::Builder.new
     Dir.glob("#{@@template_dir}/**/*.soy") do |file|
+      files_in_order << file
       @@files[file] = File.mtime(file).to_i
       sfs_builder.add(java.io.File.new(file))
     end
     if @@files.keys.size == 0
-      # No templates
+      # no templates
       @@tofu = nil
     else
       sfs = sfs_builder.build
+
+      # ruby
       @@tofu = sfs.compileToJavaObj
+
+      # javascript
+      sfs.compileToJsSrc(@@soyJsSrcOptions, nil).each_with_index do |js_out, index|
+        file_path = File.join(@@output_dir, files_in_order[index].gsub(/^#{@@template_dir}\//, '').gsub(/soy$/, 'js'))
+        File.open(file_path, 'w') do |f|
+          f.write(js_out)
+        end
+      end
+
     end
   end
 
