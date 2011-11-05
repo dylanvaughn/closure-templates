@@ -29,7 +29,7 @@ class ClosureTemplates
 
   def self.render(template, assigns = {})
     if !@@initialized
-      raise "ERROR: Not initialized!\nInitialize by calling 'ClosureTemplates.init(path_to_templates)' before calling render.\n"
+      raise "ERROR: Not configured!\nConfigure by calling 'ClosureTemplates.config(:template_directory => path_to_templates, :output_directory => path_to_where_js_should_go)' before calling render.\n"
     end
     if @@tofu.nil?
       raise "ERROR: No templates found in #{@@template_dir}"
