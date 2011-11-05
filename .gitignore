@@ -3,4 +3,5 @@
 Gemfile.lock
 pkg/*
 .rvmrc
+build.sh
 test/js/*.js
