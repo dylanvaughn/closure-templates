@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Google Closure Templates for jRuby / Rails}
   s.description = %q{Generates methods / code for server and client-side use of Google Closure Templates}
 
+  s.add_dependency('tilt')
   s.add_development_dependency('test-unit')
 
   s.files         = `git ls-files`.split("\n")

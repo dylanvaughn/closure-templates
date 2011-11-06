@@ -1,7 +1,10 @@
+require 'tilt'
 require 'fileutils'
 require 'java'
-require "#{File.dirname(__FILE__)}/soy-latest.jar"
+require "#{File.dirname(__FILE__)}/jar/soy-latest.jar"
 
+require 'closure-templates/version'
+require 'closure-templates/directive_processor'
 require 'closure-templates/railtie' if defined?(Rails)
 
 java_import "com.google.template.soy.SoyFileSet"
@@ -63,7 +66,7 @@ class ClosureTemplates
       sfs = sfs_builder.build
 
       # ruby
-      @@tofu = sfs.compileToJavaObj
+      @@tofu = sfs.compileToJavaObj(true)
 
       # javascript
       sfs.compileToJsSrc(@@soyJsSrcOptions, nil).each_with_index do |js_out, index|
