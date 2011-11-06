@@ -2,9 +2,9 @@ class ClosureDependenciesProcessor < Tilt::Template
   def prepare; end
 
   def evaluate(context, locals, &block)
-    Rails.logger.debug("Requiring google base")
+    environment.logger.info("Requiring google base")
     context.require_asset 'goog/base'
-    Rails.logger.debug("Requiring google base")
+    environment.logger.info("Requiring google base")
     context.require_asset 'soyutils_usegoog'
 
     data.lines.each do |line|
@@ -15,7 +15,7 @@ class ClosureDependenciesProcessor < Tilt::Template
         sub = mod if sub.nil?
 
         dep = [goog, mod, sub].compact.join("/").downcase
-        Rails.logger.debug("REQUIRING: #{dep}")
+        environment.logger.info("REQUIRING: #{dep}")
         context.require_asset(dep)
       end
     end
