@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Dylan Vaughn"]
   s.email       = ["dylancvaughn@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/dylanvaughn/closure-templates"
   s.summary     = %q{Google Closure Templates for jRuby / Rails}
   s.description = %q{Generates methods / code for server and client-side use of Google Closure Templates with jRuby}
 
