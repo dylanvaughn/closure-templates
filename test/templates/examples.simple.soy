@@ -7,3 +7,51 @@
 {template .helloSimple}
   Hiya {$name}!
 {/template}
+
+/**
+ * Greets a object
+ * @param object The named thing.
+ */
+{template .helloObject}
+  First name is: {$object.first_name} and last name is: {$object.last_name} and full name is: {$object.full_name}
+{/template}
+
+/**
+ * Tells you your age (testing numbers)
+ * @param object The named thing.
+ */
+{template .helloObjectInt}
+  {$object.first_name}'s age is {$object.age}
+{/template}
+
+
+/**
+ * Greets a list of objects
+ * @param objects An array of the things.
+ */
+{template .helloObjects}
+  {foreach $object in $objects}
+    {call .helloObject}
+      {param object: $object /}
+    {/call}
+    <br />
+  {/foreach}
+{/template}
+
+
+/**
+ * Data tests
+ * @param data A hash of different data types
+ */
+{template .dataObjects}
+String is {$data.string}, int is {$data.int}, float is {$data.float}, null is {$data.null}, bool_true is {$data.bool_true}, bool_false is {$data.bool_false}
+{/template}
+
+
+/**
+ * Data tests
+ * @param data A hash of different bools
+ */
+{template .booleans}
+{if $data.bool_true}True is true.{/if} {if not $data.bool_false}False is false.{/if}
+{/template}
