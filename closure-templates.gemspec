@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["dylancvaughn@gmail.com"]
   s.homepage    = ""
   s.summary     = %q{Google Closure Templates for jRuby / Rails}
-  s.description = %q{Generates methods / code for server and client-side use of Google Closure Templates}
+  s.description = %q{Generates methods / code for server and client-side use of Google Closure Templates with jRuby}
 
   s.add_development_dependency('test-unit')
 
