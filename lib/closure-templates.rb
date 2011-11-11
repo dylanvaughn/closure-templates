@@ -1,4 +1,3 @@
-require 'tilt'
 require 'fileutils'
 require 'java'
 require "#{File.dirname(__FILE__)}/jar/soy-latest.jar"
